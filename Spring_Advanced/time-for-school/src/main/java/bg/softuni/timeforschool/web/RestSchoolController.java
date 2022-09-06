@@ -2,15 +2,17 @@ package bg.softuni.timeforschool.web;
 
 import bg.softuni.timeforschool.model.dto.SchoolDetailDTO;
 import bg.softuni.timeforschool.service.SchoolService;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
+
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/api/schools")
 public class RestSchoolController {
@@ -27,6 +29,20 @@ public class RestSchoolController {
                 ok(schoolService.getAllSchoolsRest());
     }
 
+    @Tag(name = "Get school by ID", description = "Returns the school details by its id")
+    @Parameter(
+            name = "id",
+            description = "The ID of the school",
+            required = true
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "If the school was retrieved successfully"
+    )
+    @ApiResponse(
+            responseCode = "404",
+            description = "If the school was not found"
+    )
     @GetMapping("/{id}")
     public ResponseEntity<SchoolDetailDTO> getSchoolById(@PathVariable("id") Long schoolId) {
         Optional<SchoolDetailDTO> schoolOpt = schoolService.findSchoolByID(schoolId);
