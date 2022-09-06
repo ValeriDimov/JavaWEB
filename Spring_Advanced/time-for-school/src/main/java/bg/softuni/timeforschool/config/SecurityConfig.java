@@ -40,7 +40,9 @@ public class SecurityConfig {
             antMatchers("/offers/**").permitAll().
             antMatchers("/schools/**").permitAll().
             antMatchers("/api/**").permitAll().
-        // all other pages are available for logger in users
+            antMatchers("/swagger-ui/**").permitAll().
+            antMatchers("/v3/**").permitAll().
+            // all other pages are available for logger in users
             anyRequest().
         authenticated().
         and().
